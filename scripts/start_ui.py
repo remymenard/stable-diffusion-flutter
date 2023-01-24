@@ -1,9 +1,11 @@
-# from start_engine import generate_image
 import flet
 from flet import Page, Row, TextField, Column, Slider, Text, Divider, Container, padding, MainAxisAlignment, CrossAxisAlignment, Image, ImageFit, FilledButton
 
 import sys
+
 sys.path.insert(0, '../engine')
+from generated_image import GeneratedImage
+# from start_engine import generate_image
 
 
 def main(page: Page):
@@ -21,8 +23,16 @@ def main(page: Page):
         on_change=prompt_changed,
     )
 
-    page.add(
-        Container(
+    selected_image = GeneratedImage()
+
+    def generate_image(e):
+        selected_image.set_url(f"https://picsum.photos/1024/1024?10")
+        selected_image.set_status("done")
+        page.clean()
+        page.add(layout())
+
+    def layout():
+        return Container(
             padding=padding.only(left=100, right=100, top=50),
             expand=1,
             content=Column(
@@ -46,10 +56,7 @@ def main(page: Page):
                             Container(
                                 expand=1,
                                 content=Container(
-                                    content=Image(
-                                        fit=ImageFit.FIT_HEIGHT,
-                                        src=f"https://picsum.photos/1024/1024?10",
-                                    )
+                                    content=selected_image.get_widget()
                                 )
 
                             )
@@ -63,7 +70,8 @@ def main(page: Page):
                         content=Column(
                             [
                                 prompt_textbox,
-                                FilledButton(text="Generate new image")
+                                FilledButton(
+                                    text="Generate new image", on_click=generate_image)
                             ],
                             horizontal_alignment=CrossAxisAlignment.END
                         )
@@ -72,7 +80,8 @@ def main(page: Page):
                 alignment=MainAxisAlignment.CENTER,
             )
         )
-    )
+
+    page.add(layout())
 
 
 flet.app(target=main)
