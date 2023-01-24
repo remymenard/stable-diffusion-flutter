@@ -9,13 +9,18 @@ The project currently runs on stable_diffusion.openvino instead of the classic S
 ## Installation
 
 #### Requirements
-Python <= 3.9.0
+
+**Pipenv**
+Install it with
+```bash
+   pip install pipenv
+```
 
 #### Setup
+
+Install all the dependencies with Pipenv running:
 ```bash
-   python -m pip install --upgrade pip
-   pip install openvino-dev[onnx,pytorch]==2022.3.0
-   pip install -r requirements.txt
+   pipenv install
 ```
 
 
