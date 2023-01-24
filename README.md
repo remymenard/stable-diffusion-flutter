@@ -1,4 +1,4 @@
-# Project Title
+# Stable Difffusion Flutter
 A native and browser interface for Stable Diffusion based on Flutter (with flet). The goal of this project is to have a Stable Interface interface running on all platforms fully written in Python, making the developments of plugins easier than on a classic HTML WebUI or with native OS code.
 
 
