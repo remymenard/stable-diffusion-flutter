@@ -104,7 +104,7 @@ class StableDiffusionEngine:
             init_image = None,
             mask = None,
             strength = 0.5,
-            num_inference_steps = 32,
+            num_inference_steps = 10,
             guidance_scale = 7.5,
             eta = 0.0
     ):

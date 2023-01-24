@@ -1,6 +1,9 @@
 import flet
 from flet import IconButton, Page, Row, TextField, icons
-from demo import generate_image
+
+import sys
+sys.path.insert(0, '../engine')
+from start_engine import generate_image
 
 def main(page: Page):
     generate_image()
