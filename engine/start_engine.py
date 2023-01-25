@@ -4,7 +4,7 @@ import os
 import json
 import random
 # engine
-from stable_diffusion_engine import StableDiffusionEngine
+from engine.stable_diffusion_engine import StableDiffusionEngine
 # scheduler
 from diffusers import LMSDiscreteScheduler, PNDMScheduler
 # utils
@@ -44,6 +44,7 @@ def main(args):
         guidance_scale = args.guidance_scale,
         eta = args.eta
     )
+    print("finish generating")
     cv2.imwrite(args.output, image)
 
 def generate_image():
@@ -57,7 +58,7 @@ def generate_image():
     parser.add_argument("--beta-end", type=float, default=0.012, help="LMSDiscreteScheduler::beta_end")
     parser.add_argument("--beta-schedule", type=str, default="scaled_linear", help="LMSDiscreteScheduler::beta_schedule")
     # diffusion params
-    parser.add_argument("--num-inference-steps", type=int, default=10, help="num inference steps")
+    parser.add_argument("--num-inference-steps", type=int, default=4, help="num inference steps")
     parser.add_argument("--guidance-scale", type=float, default=7.5, help="guidance scale")
     parser.add_argument("--eta", type=float, default=0.0, help="eta")
     # tokenizer

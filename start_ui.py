@@ -3,10 +3,7 @@ from flet import Page, Row, TextField, Column, Slider, Text, Divider, Container,
 
 import sys
 
-sys.path.insert(0, '../engine')
-from generated_image import GeneratedImage
-# from start_engine import generate_image
-
+from engine.generated_image import *
 
 def main(page: Page):
     # generate_image()
@@ -17,22 +14,17 @@ def main(page: Page):
         prompt.value = e.control.value
         page.update()
 
+    def generate_image(e):
+        selected_image.set_status(Status.GENERATING)
+
+    selected_image = GeneratedImage()
     prompt = Text()
     prompt_textbox = TextField(
         label="Prompt",
         on_change=prompt_changed,
     )
 
-    selected_image = GeneratedImage()
-
-    def generate_image(e):
-        selected_image.set_url(f"https://picsum.photos/1024/1024?10")
-        selected_image.set_status("done")
-        page.clean()
-        page.add(layout())
-
-    def layout():
-        return Container(
+    layout = Container(
             padding=padding.only(left=100, right=100, top=50),
             expand=1,
             content=Column(
@@ -81,7 +73,10 @@ def main(page: Page):
             )
         )
 
-    page.add(layout())
+    selected_image.page = page
+    selected_image.layout = layout
+
+    page.add(layout)
 
 
 flet.app(target=main)
