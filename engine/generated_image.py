@@ -2,9 +2,14 @@ from flet import Container
 from enum import Enum
 from engine.start_engine import generate_image
 
-class GeneratedImage:
+from engine.widgets.no_generated_image_widget import *
+from engine.widgets.generated_image_widget import *
+from engine.widgets.loader_widget import *
+
+class GeneratedImage():
     def __init__(self):
         self.__url = ""
+        self.__base64_image = ""
         self.__status = Status.WAITING
 
     def get_url(self):
@@ -14,31 +19,25 @@ class GeneratedImage:
     def get_status(self):
         return self.__status
 
-    def set_status(self, value):
-        self.__status = value
-        match self.__status:
-            case Status.GENERATING:
-                print("start generating")
-                generate_image()
-                print("stop generating")
+    def start_generating(self):
+        self.__status = Status.GENERATING
+        self.__base64_image = generate_image()
+        self.__status = Status.GENERATED
+        return self.__base64_image
                 
 
-    def get_widget(self):
-        match self.__status:
-            case Status.WAITING:
-                return Container(
-                    bgcolor="red",
-                    border_radius=20,
-                    expand=1
-                )
-            case _:
-                print("green")
-                return Container(
-                    bgcolor="green",
-                    border_radius=20,
-                    expand=1
-                )
+    def get_base64_image(self):
+        return self.__base64_image
+                
 
+    def get_widget(self, status):
+        match status:
+            case Status.WAITING:
+                return NoGeneratedImageWidget()
+            case Status.GENERATING:
+                return LoaderWidget()
+            case Status.GENERATED:
+                return GeneratedImageWidget(self.__base64_image)
 
 class Status(Enum):
     WAITING = 1

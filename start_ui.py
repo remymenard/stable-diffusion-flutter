@@ -19,7 +19,12 @@ def main(page: Page):
         page.update()
 
     def generate_image(e):
-        selected_image.set_status(Status.GENERATING)
+        page.clean()
+        page.add(layout(Status.GENERATING))
+        selected_image.start_generating()
+        page.clean()
+        page.add(layout(Status.GENERATED))
+
 
     selected_image = GeneratedImage()
     prompt = Text()
@@ -28,7 +33,8 @@ def main(page: Page):
         on_change=prompt_changed,
     )
 
-    layout = Container(
+    def layout(status):
+        return Container(
             padding=padding.only(left=100, right=100, top=50),
             expand=1,
             content=Column(
@@ -49,7 +55,7 @@ def main(page: Page):
                                 ]
                             )
                             ),
-                            NoGeneratedImageWidget()
+                            selected_image.get_widget(status)
                         ],
                         alignment="center",
                     ),
@@ -71,10 +77,7 @@ def main(page: Page):
             )
         )
 
-    selected_image.page = page
-    selected_image.layout = layout
-
-    page.add(layout)
+    page.add(layout(Status.WAITING))
 
 
 flet.app(target=main)

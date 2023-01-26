@@ -10,6 +10,7 @@ from diffusers import LMSDiscreteScheduler, PNDMScheduler
 # utils
 import cv2
 import numpy as np
+import base64
 
 def main(args):
     if args.seed is None:
@@ -44,8 +45,9 @@ def main(args):
         guidance_scale = args.guidance_scale,
         eta = args.eta
     )
-    print("finish generating")
-    cv2.imwrite(args.output, image)
+    base64_image = base64.b64encode(cv2.imencode('.png', image)[1]).decode()
+
+    return base64_image
 
 def generate_image():
     parser = argparse.ArgumentParser()
@@ -75,4 +77,6 @@ def generate_image():
     # output name
     parser.add_argument("--output", type=str, default="output.png", help="output image name")
     args = parser.parse_args()
-    main(args)
+    base64_image = main(args)
+
+    return base64_image
