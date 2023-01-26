@@ -49,7 +49,7 @@ def main(page: Page):
                                 ]
                             )
                             ),
-                            LoaderWidget()
+                            NoGeneratedImageWidget()
                         ],
                         alignment="center",
                     ),

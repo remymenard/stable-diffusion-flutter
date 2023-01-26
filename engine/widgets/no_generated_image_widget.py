@@ -5,7 +5,6 @@ class NoGeneratedImageWidget(Container):
         Container.__init__(
             self,
             bgcolor="primary",
-            expand=1,
-            content=ProgressRing(color="red")
+            expand=1
         )
 
