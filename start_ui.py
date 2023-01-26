@@ -5,6 +5,10 @@ import sys
 
 from engine.generated_image import *
 
+from engine.widgets.no_generated_image_widget import *
+from engine.widgets.generated_image_widget import *
+from engine.widgets.loader_widget import *
+
 def main(page: Page):
     # generate_image()
     page.title = "Stable Diffusion Flutter"
@@ -45,13 +49,7 @@ def main(page: Page):
                                 ]
                             )
                             ),
-                            Container(
-                                expand=1,
-                                content=Container(
-                                    content=selected_image.get_widget()
-                                )
-
-                            )
+                            LoaderWidget()
                         ],
                         alignment="center",
                     ),
